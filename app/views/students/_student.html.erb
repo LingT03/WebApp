@@ -19,6 +19,11 @@
     <%= student.major %>
   </p>
 
+ <p>
+    <strong>Minor:</strong>
+    <%= student.minor.present? ? student.minor : 'N/A' %>
+ </p>  
+
   <p>
     <strong>Expected graduation date:</strong>
     <%= student.expected_graduation_date %>
