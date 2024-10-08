@@ -18,7 +18,7 @@ class StudentsTest < ApplicationSystemTestCase
     fill_in "First name", with: @student.first_name
     fill_in "Last name", with: @student.last_name
     fill_in "Major", with: @student.major
-    fill_in "School email", with: @student.school_email
+    fill_in "School email", with: "new.student@msudenver.edu", match: :first
     click_on "Create Student"
 
     assert_text "Student was successfully created"

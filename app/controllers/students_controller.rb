@@ -3,7 +3,11 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
-    @students = Student.all
+    if params[:query].present?
+      @students = Student.where("first_name LIKE :query OR last_name LIKE :query OR major LIKE :query OR minor LIKE :query", query: "%#{params[:query]}%")
+    else
+      @students = Student.all
+    end
   end
 
   # GET /students/1 or /students/1.json

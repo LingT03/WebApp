@@ -3,6 +3,15 @@
 <% content_for :title, "Students" %>
 
 <h1>Students</h1>
+<%= link_to "Back to Students", students_path, class: "btn btn-primary", style: "margin-bottom: 10px;" %>
+
+<%= form_with url: students_path, method: :get, local: true do |form|%>
+  <div class="field">
+    <%= form.label :query, "Search Students" %>
+    <%= form.text_field :query, value: params[:query] %>
+    <%= form.submit "Search" %>
+  </div>
+<% end %>
 
 <div id="students">
   <% @students.each do |student| %>
@@ -11,6 +20,13 @@
       <%= link_to "Show this student", student %>
     </p>
   <% end %>
+  <% if @students.any? %>
+  <% @students.each do |student| %>
+    <!-- Display student -->
+  <% end %>
+<% else %>
+  <p style="color: red">No students found.</p>
+<% end %>
 </div>
 
 <%= link_to "New student", new_student_path %>

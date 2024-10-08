@@ -17,7 +17,13 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create student" do
     assert_difference("Student.count") do
-      post students_url, params: { student: { expected_graduation_date: @student.expected_graduation_date, first_name: @student.first_name, last_name: @student.last_name, major: @student.major, school_email: @student.school_email } }
+      post students_url, params: { student: {
+        first_name: "New",
+        last_name: "Student",
+        school_email: "new.student@msudenver.edu", # Unique and correct format
+        major: "CS",
+        expected_graduation_date: "2025-05-15"
+        } }
     end
 
     assert_redirected_to student_url(Student.last)
