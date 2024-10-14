@@ -8,6 +8,7 @@ gem "sprockets-rails"
 gem "sqlite3", ">= 1.4"
 
 gem "image_processing", "~> 1.2"
+gem "faker"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -59,6 +60,8 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "rails_helper"
+  gem "rspec-rails"
   gem "capybara"
   gem "selenium-webdriver"
   gem "cssbundling-rails", require: false

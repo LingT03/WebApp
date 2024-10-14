@@ -5,7 +5,7 @@
 <h1>Students</h1>
 <%= link_to "Back to Students", students_path, class: "btn btn-primary", style: "margin-bottom: 10px;" %>
 
-<%= form_with url: students_path, method: :get, local: true do |form|%>
+<%= form_with url: students_path, method: :get, local: true do |form| %>
   <div class="field">
     <%= form.label :query, "Search Students" %>
     <%= form.text_field :query, value: params[:query] %>
@@ -14,19 +14,18 @@
 <% end %>
 
 <div id="students">
-  <% @students.each do |student| %>
-    <%= render student %>
-    <p>
-      <%= link_to "Show this student", student %>
-    </p>
+  <% if params[:query].present? %>
+    <% if @students.any? %>
+      <% @students.each do |student| %>
+        <%= render student %>
+        <p><%= link_to "Show this student", student %></p>
+      <% end %>
+    <% else %>
+      <p style="color: red">No students found.</p>
+    <% end %>
+  <% else %>
+    <p>Please enter search criteria to find students.</p>
   <% end %>
-  <% if @students.any? %>
-  <% @students.each do |student| %>
-    <!-- Display student -->
-  <% end %>
-<% else %>
-  <p style="color: red">No students found.</p>
-<% end %>
 </div>
 
 <%= link_to "New student", new_student_path %>
