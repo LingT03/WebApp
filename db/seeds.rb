@@ -26,11 +26,15 @@ ActiveStorage::Blob.where.missing(:attachments).find_each(&:purge)
 Student.destroy_all # Clear existing records if any
 
 50.times do |i|
+  first_name = Faker::Name.first_name
+  last_name = Faker::Name.last_name
+
+
  student = Student.create!(
-   first_name: "First #{i + 1}",
-   last_name: "Last #{i + 1}",
-   school_email: "student#{i + 1}@msudenver.edu",
-   major: Student::VALID_MAJORS.sample, # Assuming you have a VALID_MAJORS constant
+   first_name: first_name,
+   last_name: last_name,
+   school_email: "#{first_name.downcase}.#{last_name.downcase}@msudenver.edu",
+   major: Faker::Educator.subject,
    expected_graduation_date: Faker::Date.between(from: 2.years.ago, to: 2.years.from_now),
 
  )
