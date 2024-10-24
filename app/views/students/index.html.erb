@@ -15,7 +15,6 @@
   <% if @students.any? %>
     <% @students.each do |student| %>
       <%= render student %>
-      <p><%= link_to "Show this student", student %></p>
     <% end %>
   <% elsif @students.empty? %>
     <p style="color: red">No students found.</p>

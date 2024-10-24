@@ -34,10 +34,11 @@ Student.destroy_all # Clear existing records if any
  student = Student.create!(
    first_name: first_name,
    last_name: last_name,
-   school_email: "#{first_name.downcase.gsub(/[^a-z]/, '')}.#{last_name.downcase.gsub(/[^a-z]/, '')}@msudenver.edu",
+   email: "#{first_name.downcase.gsub(/[^a-z]/, '')}.#{last_name.downcase.gsub(/[^a-z]/, '')}@msudenver.edu",
    major: Faker::Educator.subject,
    minor: minorprob,
    expected_graduation_date: Faker::Date.between(from: 2.years.ago, to: 2.years.from_now),
+   password: 'password',
 
  )
   # Generate a unique profile pic based on the student's name
