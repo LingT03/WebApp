@@ -7,6 +7,7 @@ gem "sprockets-rails"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 1.4"
 
+gem "devise"
 gem "image_processing", "~> 1.2"
 gem "faker"
 
