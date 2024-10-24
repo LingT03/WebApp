@@ -28,20 +28,22 @@ Student.destroy_all # Clear existing records if any
 50.times do |i|
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
+  minorprob = rand < 0.15 ? Faker::Educator.subject : nil
 
 
  student = Student.create!(
    first_name: first_name,
    last_name: last_name,
-   school_email: "#{first_name.downcase}.#{last_name.downcase}@msudenver.edu",
+   school_email: "#{first_name.downcase.gsub(/[^a-z]/, '')}.#{last_name.downcase.gsub(/[^a-z]/, '')}@msudenver.edu",
    major: Faker::Educator.subject,
+   minor: minorprob,
    expected_graduation_date: Faker::Date.between(from: 2.years.ago, to: 2.years.from_now),
 
  )
   # Generate a unique profile pic based on the student's name
-  # profile_picture_url = "https://robohash.org/#{student.first_name.gsub(' ', '')}"
-  # profile_picture = URI.open(profile_picture_url)
-  # student.profile_picture.attach(io: profile_picture, filename: "#{student.first_name}.jpg")
+  profile_picture_url = "https://robohash.org/#{student.first_name.gsub(' ', '')}"
+  profile_picture = URI.open(profile_picture_url)
+  student.profile_picture.attach(io: profile_picture, filename: "#{student.first_name}.jpg")
 end
 
 puts "50 students created."

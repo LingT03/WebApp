@@ -1,0 +1,30 @@
+<%= form_with url: students_path, method: :get, local: true, class: "form-inline" do |form| %>
+  <!-- General Search Field -->
+  <div class="field">
+    <%= form.label :search, "Search Students" %>
+    <%= form.text_field :search, name: "query[search]", value: params.dig(:query, :search) %>
+  </div>
+
+  <!-- Filter by Major -->
+  <div class="field">
+    <%= form.label :major, "Major" %>
+    <%= form.text_field :major, name: "query[major]", value: params.dig(:query, :major) %>
+  </div>
+
+  <!-- Filter by Expected Graduation Date -->
+  <div class="field">
+    <%= form.label :expected_graduation_date, "Expected Graduation Date" %>
+    <%= form.date_field :expected_graduation_date, name: "query[expected_graduation_date]", value: params.dig(:query, :expected_graduation_date) %>
+  </div>
+
+  <!-- Date Type Selector -->
+  <div class="field">
+    <%= form.label :date_type, "Date Type" %>
+    <%= form.select :date_type, options_for_select([['Before', 'before'], ['After', 'after']], selected: params.dig(:query, :date_type)), {}, name: "query[date_type]" %>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="actions">
+    <%= form.submit "Search", class: "btn btn-primary" %>
+  </div>
+<% end %>

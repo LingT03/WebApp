@@ -1,13 +1,43 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: %i[ show edit update destroy ]
 
-  # GET /students or /students.json
   def index
-    if params[:query].present?
-      @students = Student.where("first_name LIKE :query OR last_name LIKE :query OR major LIKE :query OR minor LIKE :query", query: "%#{params[:query]}%")
-    else
+    @search_params = params[:query] || {}
+
+    # If there are search parameters, filter the students
+    if @search_params.present?
       @students = Student.all
+
+      # General search by first name or last name (case-insensitive)
+      if @search_params[:search].present?
+        search_term = "%#{@search_params[:search].downcase}%" # Convert search term to lowercase
+        @students = @students.where("LOWER(first_name) LIKE ? OR LOWER(last_name) LIKE ?", search_term, search_term)
+      end
+
+      # Filter by major (case-insensitive)
+      if @search_params[:major].present?
+        major_search_term = @search_params[:major].downcase # Convert major to lowercase
+        @students = @students.where("LOWER(major) = ?", major_search_term)
+      end
+
+      # Filter by expected graduation date if present
+      if @search_params[:expected_graduation_date].present? && @search_params[:date_type].present?
+        date = @search_params[:expected_graduation_date]
+        if @search_params[:date_type] == "before"
+          @students = @students.where("expected_graduation_date < ?", date)
+        elsif @search_params[:date_type] == "after"
+          @students = @students.where("expected_graduation_date > ?", date)
+        end
+      end
+
+    else
+      # If no search parameters are present, return an empty collection
+      @students = Student.none
     end
+
+    # Log for debugging
+    Rails.logger.info "Search Params: #{@search_params.inspect}"
+    Rails.logger.info "Filtered Students: #{@students.inspect}"
   end
 
   # GET /students/1 or /students/1.json
